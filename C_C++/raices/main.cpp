@@ -5,7 +5,7 @@
 #include <gsl/gsl_errno.h> //libreria para indicar diferentes estados
 
 double f(double x, void *params) { //creacion funcion llamada f
-  return 0; //funcion devuelve 0 para cualquier valor de x 
+  return x*x*x - 5*x +1; //funcion a hallar las raices
 }
 
 int main() {
