@@ -1,42 +1,42 @@
 #include <iostream>
 #include <iomanip>
-#include <cmath>
-#include <gsl/gsl_roots.h>
-#include <gsl/gsl_errno.h>
+#include <cmath> //libreria matematica
+#include <gsl/gsl_roots.h> //libreria raices
+#include <gsl/gsl_errno.h> //libreria para indicar diferentes estados
 
-double f(double x, void *params) {
-  return 0;
+double f(double x, void *params) { //creacion funcion llamada f
+  return 0; //funcion devuelve 0 para cualquier valor de x 
 }
 
 int main() {
-  const gsl_root_fsolver_type *T;
-  gsl_root_fsolver *s;
-  gsl_function F;
-  F.function = &f;
-  F.params = nullptr;
-  double x_lo = 0.0;
-  double x_hi = 1.0;
-  T = gsl_root_fsolver_bisection;
-  s = gsl_root_fsolver_alloc(T);
-  gsl_root_fsolver_set(s, &F, x_lo, x_hi);
-  std::cout << "iter\t" << "inf\t" << "sup\t" << "raíz\n";
+  const gsl_root_fsolver_type *T; //creacion variable llamada T 
+  gsl_root_fsolver *s; //creacion variable llamada s, solucionador de raices 
+  gsl_function F; //creacion estructura llamada F 
+  F.function = &f; //aqui se le dice a GSL la funcion F 
+  F.params = nullptr; //indica que no vamos a usar parametros adicionales para la funcion F
+  double x_lo = 0.0; //limite inferior del intervalo
+  double x_hi = 1.0; //limite superior del intervalo
+  T = gsl_root_fsolver_bisection; //se le indica a GSL que se va a usar el metodo de biseccion
+  s = gsl_root_fsolver_alloc(T); //creacion del solucionador 
+  gsl_root_fsolver_set(s, &F, x_lo, x_hi); //se le da todo lo necesario a GSL
+  std::cout << "iter\t" << "inf\t" << "sup\t" << "raiz\n"; //imprime encabezado de la tabla
 
-  int status;
-  int iter = 0;
-  int max_iter = 100;
-  double r;
+  int status; //guarda estado del proceso 
+  int iter = 0; //contador de iteraciones
+  int max_iter = 100; //limite de iteraciones
+  double r; //se guarda la raiz encontrada
 
   do {
-	iter++;
-	status = gsl_root_fsolver_iterate(s);
-	r = gsl_root_fsolver_root(s);
-	x_lo = gsl_root_fsolver_x_lower(s);
-	x_hi = gsl_root_fsolver_x_upper(s);
-	std::cout << iter << "\t" << x_lo << "\t" << x_hi << "\t" << r << "\n"; 
-        status = gsl_root_test_interval( x_lo, x_hi, 0.0, 1e-8);
+	iter++; //aumenta numero de iteraciones
+	status = gsl_root_fsolver_iterate(s); //Ejecuta la iteracion 
+	r = gsl_root_fsolver_root(s); //obtiene la raiz encontrada
+	x_lo = gsl_root_fsolver_x_lower(s); //nuevo limite inferior del intervalo
+	x_hi = gsl_root_fsolver_x_upper(s); //nuevo limite superior del intervalo
+	std::cout << iter << "\t" << x_lo << "\t" << x_hi << "\t" << r << "\n"; //muestra resultados
+        status = gsl_root_test_interval( x_lo, x_hi, 0.0, 1e-8); //comprueba precision
   } while(status == GSL_CONTINUE && iter < max_iter);
 
-  std::cout << "\nRaiz encontrada = " << r << std::endl; gsl_root_fsolver_free(s);
+  std::cout << "\nRaiz encontrada = " << r << std::endl; gsl_root_fsolver_free(s); //imprime valores en la tabla
   return 0;
 }
 
