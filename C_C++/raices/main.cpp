@@ -16,7 +16,7 @@ int main() {
   F.params = nullptr; //indica que no vamos a usar parametros adicionales para la funcion F
   double x_lo = 0.0; //limite inferior del intervalo
   double x_hi = 1.0; //limite superior del intervalo
-  T = gsl_root_fsolver_brent; //se le indica a GSL que se va a usar el metodo de Brent  
+  T = gsl_root_fsolver_falsepos; //se le indica a GSL que se va a usar el metodo de Brent  
   s = gsl_root_fsolver_alloc(T); //creacion del solucionador 
   gsl_root_fsolver_set(s, &F, x_lo, x_hi); //se le da todo lo necesario a GSL
   std::cout << "iter\t" << "inf\t" << "sup\t" << "raiz\n"; //imprime encabezado de la tabla
