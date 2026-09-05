@@ -30,7 +30,7 @@ int main() {
   double x = 0.0;
   double x_prev = 1.0;
 
-  T = gsl_root_fdfsolver_secant; //se indica que se va a usar Secante
+  T = gsl_root_fdfsolver_newton; //se indica que se va a usar Steffensen
   s = gsl_root_fdfsolver_alloc(T); //creacion del solucionador
 
   gsl_root_fdfsolver_set(s, &FDF, x);
@@ -46,8 +46,11 @@ int main() {
 
     r_anterior = x;
 
-    gsl_root_fdfsolver_iterate(s);
-    r = gsl_root_fdfsolver_root(s);
+    // Metodo de Steffensen
+    double fx = f(x, nullptr);
+    double fx2 = f(x + fx, nullptr);
+
+    r = x - (fx * fx) / (fx2 - fx);
     x = r;
 
     std::cout << iter << "\t" << x << "\t\t" << r << "\n";
