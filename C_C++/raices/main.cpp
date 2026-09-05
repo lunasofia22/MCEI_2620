@@ -27,13 +27,13 @@ int main() {
   FDF.fdf = &fdf;
   FDF.params = nullptr;
 
-  double x = 1.0; //valor inicial
+  double x = 0.0;
+  double x_prev = 1.0;
 
-  T = gsl_root_fdfsolver_newton; //se indica que se va a usar Newton
+  T = gsl_root_fdfsolver_secant; //se indica que se va a usar Secante
   s = gsl_root_fdfsolver_alloc(T); //creacion del solucionador
 
   gsl_root_fdfsolver_set(s, &FDF, x);
-
   std::cout << "iter\t" << "x\t\t" << "raiz\n";
 
   int iter = 0;
