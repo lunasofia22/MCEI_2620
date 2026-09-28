@@ -80,3 +80,5 @@ fprintf(fid, 'simpson,%.10f\n', I_simpson_last);
 fclose(fid);
 
 printf('Resultados guardados en resultados/ej2_octave.csv\n');
+
+input('ENTER para salir');
